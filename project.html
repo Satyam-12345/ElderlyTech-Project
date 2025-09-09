@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechConnectApp</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('front.jpg'); /* Your local image */
+            background-size: cover;
+            margin: 0;
+            color: #000; /* Black text */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+        
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            font-size: 2em; /* Larger font */
+            
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 20px;
+        }
+
+        .category {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            transition: transform 0.2s;
+            cursor: pointer;
+            width: 200px;
+        }
+
+        .category:hover {
+            transform: scale(1.05);
+        }
+
+        .category img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1em;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background-color: #27ae60;
+        }
+
+        .back-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1em;
+            border-radius: 5px;
+        }
+
+        .back-btn:hover {
+            background-color: #c0392b;
+        }
+
+
+        .hidden {
+            display: none;
+        }
+
+        .transport-options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .resources ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+
+
+        .resources a {
+            color: #000; /* Black links */
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to TechConnect</h1>
+        <p>Your gateway to various services!</p>
+    </header>
+
+    <main>
+        <div id="main-content">
+            <h2>Select a Service Category</h2>
+            <div class="categories">
+                <div class="category" onclick="chooseCategory('travel')">
+                    <h3>Travel</h3>
+                    <img src="travel.jpg" alt="Travel">
+                </div>
+                <div class="category" onclick="chooseCategory('education')">
+                    <h3>Education</h3>
+                    <img src="education.jpg" alt="Education">
+                </div>
+                <div class="category" onclick="chooseCategory('healthcare')">
+                    <h3>Healthcare</h3>
+                    <img src="healthcare.jpg" alt="Healthcare">
+                </div>
+                <div class="category" onclick="chooseCategory('finance')">
+                    <h3>Finance</h3>
+                    <img src="finance.jpg" alt="Finance">
+                </div>
+                <div class="category" onclick="chooseCategory('entertainment')">
+                    <h3>Entertainment</h3>
+                    <img src="entertainment.jpg" alt="Entertainment">
+                </div>
+            </div>
+        </div>
+
+        <!-- Travel Section -->
+        <div id="travel" class="category-content hidden">
+            <h2>Travel Services</h2>
+            <p>Choose your mode of transportation:</p>
+            <div class="transport-options">
+                <button class="btn" onclick="window.open('https://www.irctc.co.in', '_blank')">Train</button>
+                <button class="btn" onclick="window.open('https://www.redbus.in', '_blank')">Bus</button>
+                <button class="btn" onclick="window.open('https://www.ixigo.com/flights', '_blank')">Flight</button>
+            </div>
+            <button class="back-btn" onclick="goBack()">Back to Categories</button>
+        </div>
+
+        <!-- Education Section -->
+        <div id="education" class="category-content hidden">
+            <h2>Education Services</h2>
+            <p>Please select your class level:</p>
+            <select id="class-level" onchange="showResources()">
+                <option value="">Select Class Level</option>
+                <option value="1">Class 1</option>
+                <option value="2">Class 2</option>
+                <option value="3">Class 3</option>
+                <option value="4">Class 4</option>
+                <option value="5">Class 5</option>
+                <option value="6">Class 6</option>
+                <option value="7">Class 7</option>
+                <option value="8">Class 8</option>
+                <option value="9">Class 9</option>
+                <option value="10">Class 10</option>
+                <option value="11">Class 11</option>
+                <option value="12">Class 12</option>
+                <option value="Engineering">Engineering</option>
+                <option value="BBA">BBA</option>
+                <option value="BSc">BSc</option>
+                <option value="BCA">BCA</option>
+            </select>
+            <div id="resources" class="hidden">
+                <h3>Suggested Resources:</h3>
+                <ul id="resource-list"></ul>
+            </div>
+            <button class="back-btn" onclick="goBack()">Back to Categories</button>
+        </div>
+
+ <!-- Healthcare Section -->
+<div id="healthcare" class="category-content hidden">
+    <h2>Healthcare Services</h2>
+    <p>Please select your role:</p>
+    <div class="role-selection">
+        <button class="btn" onclick="chooseRole('patient')">Patient</button>
+        <button class="btn" onclick="chooseRole('doctor')">Doctor</button>
+    </div>
+
+    <div id="patient-form" class="hidden">
+        <h3>Patient Form</h3>
+        <label for="disease">What disease are you suffering from?</label>
+        <input type="text" id="disease" placeholder="Enter your disease here" />
+        <button class="btn" onclick="getHomeRemedies()">Get Home Remedies</button>
+        <div id="home-remedies" class="hidden"></div>
+        <h4>Prescriptions:</h4>
+        <div id="prescription-list" class="hidden"></div>
+        <button class="back-btn" onclick="goBackToRole()">Back to Role Selection</button>
+    </div>
+
+    <div id="doctor-form" class="hidden">
+        <h3>Doctor Form</h3>
+        <h4>List of Patients</h4>
+        <ul id="patient-list">
+            <li>Patient 1: Flu <button onclick="prescribe('Flu')">Prescribe</button></li>
+            <li>Patient 2: Cold <button onclick="prescribe('Cold')">Prescribe</button></li>
+            <li>Patient 3: Headache <button onclick="prescribe('Headache')">Prescribe</button></li>
+        </ul>
+        <div id="prescription-form" class="hidden">
+            <label for="medication">Medication:</label>
+            <input type="text" id="medication" placeholder="Enter medication" />
+            <label for="dosage">Dosage:</label>
+            <input type="text" id="dosage" placeholder="Enter dosage" />
+            <button class="btn" onclick="submitPrescription()">Submit Prescription</button>
+        </div>
+        <button class="back-btn" onclick="goBackToRole()">Back to Role Selection</button>
+    </div>
+
+    <button class="back-btn" onclick="goBack()">Back to Categories</button>
+</div>
+
+<script>
+    // Data structure to hold home remedies
+    const homeRemedies = {
+        'Flu': ['Rest', 'Stay hydrated', 'Ginger tea'],
+        'Cold': ['Steam inhalation', 'Honey and lemon', 'Ginger tea'],
+        'Headache': ['Hydration', 'Cold compress', 'Rest']
+    };
+
+    // Data structure to hold prescriptions
+    const prescriptions = {
+        'Flu': [],
+        'Cold': [],
+        'Headache': []
+    };
+
+    function chooseRole(role) {
+        document.getElementById('patient-form').classList.add('hidden');
+        document.getElementById('doctor-form').classList.add('hidden');
+        
+        if (role === 'patient') {
+            document.getElementById('patient-form').classList.remove('hidden');
+        } else if (role === 'doctor') {
+            document.getElementById('doctor-form').classList.remove('hidden');
+        }
+    }
+
+    function goBackToRole() {
+        document.getElementById('patient-form').classList.add('hidden');
+        document.getElementById('doctor-form').classList.add('hidden');
+        document.getElementById('home-remedies').classList.add('hidden');
+        document.getElementById('prescription-list').classList.add('hidden');
+    }
+
+    function getHomeRemedies() {
+        const disease = document.getElementById('disease').value;
+        const remediesList = homeRemedies[disease] || ['No remedies found for this disease.'];
+        const homeRemediesDiv = document.getElementById('home-remedies');
+        homeRemediesDiv.innerHTML = '<h4>Home Remedies:</h4><ul>' + remediesList.map(remedy => <li>${remedy}</li>).join('') + '</ul>';
+        homeRemediesDiv.classList.remove('hidden');
+
+        // Show prescriptions if any
+        showPrescriptions(disease);
+    }
+
+    function showPrescriptions(disease) {
+        const prescriptionListDiv = document.getElementById('prescription-list');
+        if (prescriptions[disease].length > 0) {
+            prescriptionListDiv.innerHTML = '<ul>' + prescriptions[disease].map(prescription => <li>${prescription}</li>).join('') + '</ul>';
+            prescriptionListDiv.classList.remove('hidden');
+        } else {
+            prescriptionListDiv.innerHTML = '<p>No prescriptions found for this disease.</p>';
+            prescriptionListDiv.classList.remove('hidden');
+        }
+    }
+
+    function prescribe(disease) {
+        document.getElementById('prescription-form').classList.remove('hidden');
+        document.getElementById('prescription-form').setAttribute('data-disease', disease);
+    }
+
+    function submitPrescription() {
+        const medication = document.getElementById('medication').value;
+        const dosage = document.getElementById('dosage').value;
+        const disease = document.getElementById('prescription-form').getAttribute('data-disease');
+
+        // Store the prescription
+        const prescription = ${medication} (Dosage: ${dosage});
+        prescriptions[disease].push(prescription);
+
+        // Show confirmation
+        alert(Prescription for ${disease}: ${prescription});
+
+        // Clear the form fields
+        document.getElementById('medication').value = '';
+        document.getElementById('dosage').value = '';
+        document.getElementById('prescription-form').classList.add('hidden');
+
+        // Show updated prescriptions to patients
+        showPrescriptions(disease);
+    }
+</script>
+
+
+        <!-- Finance Section -->
+        <div id="finance" class="category-content hidden">
+            <h2>Finance Services</h2>
+            <div class="transport-options">
+                <button class="btn" onclick="window.open('https://www.sbi.co.in/', '_blank')">State Bank of India</button>
+                <button class="btn" onclick="window.open('https://www.hdfcbank.com/', '_blank')">HDFC Bank</button>
+                <button class="btn" onclick="window.open('https://www.icicibank.com/', '_blank')">ICICI Bank</button>
+            </div>
+            <button class="back-btn" onclick="goBack()">Back to Categories</button>
+        </div>
+
+        <!-- Entertainment Section -->
+        <div id="entertainment" class="category-content hidden">
+            <h2>Entertainment Services</h2>
+            <div class="transport-options">
+                <button class="btn" onclick="window.open('https://www.netflix.com/', '_blank')">Netflix</button>
+                <button class="btn" onclick="window.open('https://www.hotstar.com/', '_blank')">Disney+ Hotstar</button>
+                <button class="btn" onclick="window.open('https://www.primevideo.com/', '_blank')">Amazon Prime Video</button>
+            </div>
+            <button class="back-btn" onclick="goBack()">Back to Categories</button>
+        </div>
+    </main>
+
+   
+
+    <script>
+        function chooseCategory(category) {
+            document.getElementById('main-content').classList.add('hidden');
+            document.getElementById(category).classList.remove('hidden');
+        }
+
+        function goBack() {
+            document.querySelectorAll('.category-content').forEach(content => content.classList.add('hidden'));
+            document.getElementById('main-content').classList.remove('hidden');
+        }
+
+        function showResources() {
+            const classLevel = document.getElementById('class-level').value;
+            const resourcesDiv = document.getElementById('resources');
+            const resourceList = document.getElementById('resource-list');
+
+            if (classLevel) {
+                resourcesDiv.classList.remove('hidden');
+                let resources = [];
+
+                switch (classLevel) {
+                    case '1':
+                        resources = ['<li>Class 1 Resources: <a href="https://www.youtube.com/results?search_query=class+1+education" target="_blank">Videos</a></li>'];
+                        break;
+                    case '2':
+                        resources = ['<li>Class 2 Resources: <a href="https://www.youtube.com/results?search_query=class+2+education" target="_blank">Videos</a></li>'];
+                        break;
+                    case '3':
+                        resources = ['<li>Class 3 Resources: <a href="https://www.youtube.com/results?search_query=class+3+education" target="_blank">Videos</a></li>'];
+                        break;
+                    case '4':
+                        resources = ['<li>Class 4 Resources: <a href="https://www.youtube.com/results?search_query=class+4+education" target="_blank">Videos</a></li>'];
+                        break;
+                    case '5':
+                        resources = ['<li>Class 5 Resources: <a href="https://www.youtube.com/results?search_query=class+5+education" target="_blank">Videos</a></li>'];
+                        break;
+                    case '6':
+                        resources = ['<li>Class 6 Resources: <a href="https://www.youtube.com/results?search_query=class+6+education" target="_blank">Videos</a></li>'];
+                        break;
+                    case '7':
+                        resources = ['<li>Class 7 Resources: <a href="https://www.youtube.com/results?search_query=class+7+education" target="_blank">Videos</a></li>'];
+                        break;
+                    case '8':
+                        resources = ['<li>Class 8 Resources: <a href="https://www.youtube.com/results?search_query=class+8+education" target="_blank">Videos</a></li>'];
+                        break;
+                    case '9':
+                        resources = ['<li>Class 9 Resources: <a href="https://www.youtube.com/results?search_query=class+9+education" target="_blank">Videos</a></li>'];
+                        break;
+                    case '10':
+                        resources = ['<li>Class 10 Resources: <a href="https://www.youtube.com/results?search_query=class+10+education" target="_blank">Videos</a></li>'];
+                        break;
+                    case '11':
+                        resources = ['<li>Class 11 Resources: <a href="https://www.youtube.com/results?search_query=class+11+education" target="_blank">Videos</a></li>'];
+                        break;
+                    case '12':
+                        resources = ['<li>Class 12 Resources: <a href="https://www.youtube.com/results?search_query=class+12+education" target="_blank">Videos</a></li>'];
+                        break;
+                
+                    case 'Engineering':
+                         resources = [
+                                    '<li>Engineering Resources: <a href="https://www.coursera.org/browse/engineering" target="_blank">Courses</a></li>',
+                                     '<li>Engineering Resources: <a href="https://www.youtube.com/results?search_query=engineering+subjects+tutorials" target="_blank">Videos</a></li>'
+                        ];
+                        break;
+
+                    case 'BBA':
+                        resources = [
+                            '<li>BBA Resources: <a href="https://www.udemy.com/courses/search/?q=BBA" target="_blank">Courses</a></li>',
+                             '<li>BBA Resources: <a href="https://www.youtube.com/results?search_query=bba+subjects+tutorials" target="_blank">Videos</a></li>'
+                        ];
+                        break;
+                    case 'BSc':
+                        resources = [
+                            '<li>BSc Resources: <a href="https://www.khanacademy.org/science" target="_blank">Khan Academy</a></li>',
+                             '<li>BSc Resources: <a href="https://www.youtube.com/results?search_query=bsc+subjects+tutorials" target="_blank">Videos</a></li>'
+                        ];
+                        break;
+                    case 'BCA':
+                        resources = [
+                            '<li>BCA Resources: <a href="https://www.edx.org/learn/computer-science" target="_blank">edX</a></li>',
+                            '<li>BCA Resources: <a href="https://www.youtube.com/results?search_query=bca+subjects+tutorials" target="_blank">Videos</a></li>'
+                       ];
+                        break;
+                    default:
+                        resources = ['<li>Please select a valid class level.</li>'];
+                        break;
+                }
+
+                resourceList.innerHTML = resources.join('');
+            } else {
+                resourcesDiv.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
